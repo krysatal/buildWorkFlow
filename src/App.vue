@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">获取服务器上的流程图并显示</router-link>|
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
