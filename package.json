@@ -8,8 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "bpmn-js": "^4.0.1",
     "bpmn-js-properties-panel": "^0.31.0",
+    "bpmn-js-sketchy": "^0.2.1",
     "camunda-bpmn-moddle": "^3.2.0",
     "core-js": "^2.6.5",
     "diagram-js": "^4.0.2",

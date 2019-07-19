@@ -7,10 +7,12 @@
 
 <script>
     import BpmnViewer from 'bpmn-js' // 工作流视图（不需要操作的使用new BpmnViewer）
-    import BpmnModeler from 'bpmn-js/lib/Modeler' // 模型
+    import BpmnModeler from 'bpmn-js/lib/Modeler' // 建模器
     import propertiesPanelModule from 'bpmn-js-properties-panel' // 属性面板
-    import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda' // 属性面板描述符
+    import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda' // 添加属性面板并编辑与执行相关的BPMN 2.0属性
     import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda' //模块描述符
+    import sketchyRendererModule from 'bpmn-js-sketchy' // 工作流的主题
+    import translation from '../assets/customTranlate' // 汉化文件根据情况自己翻译
     export default {
         data () {
             return {
@@ -23,18 +25,36 @@
             // 获取到属性ref为“content”的dom节点
             this.container = this.$refs.content
             // 获取到属性ref为“canvas”的dom节点
-            const canvas = this.$refs.canvas// 建模，官方文档这里讲的很详细
-            this.bpmnModeler = new BpmnModeler({
+            const canvas = this.$refs.canvas
+            const customTranslateModule = {
+                translate: [ 'value', translation ]
+            };
+            this.bpmnModeler = new BpmnModeler({ // 建模
                 container: canvas,
                 //添加控制板
                 propertiesPanel: {
                     parent: '#js-properties-panel'
                 },
+                // 设置工作流文字字体
+                textRenderer: {
+                    defaultStyle: {
+                        fontFamily: '"Nothing You Could Do"',
+                        fontWeight: 'bold',
+                        fontSize: 12,
+                        lineHeight: 16
+                    },
+                    externalStyle: {
+                        fontSize: 12,
+                        lineHeight: 16
+                    }
+                },
                 additionalModules: [
                     // 左边工具栏以及节点
                     propertiesProviderModule,
                     // 右边的工具栏
-                    propertiesPanelModule
+                    propertiesPanelModule,
+                    sketchyRendererModule,
+                    customTranslateModule
                 ],
                 moddleExtensions: {
                     camunda: camundaModdleDescriptor
@@ -125,7 +145,6 @@
     @import '~bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css';
     @import '~bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
     @import '~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
-
     .containers{
         position: absolute;
         background-color: #ffffff;
